@@ -1,0 +1,68 @@
+<?php
+/**
+ * Copyright © 2015 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+/** @var $block \Magento\Catalog\Block\Product\View*/
+?>
+<?php
+$_product = $block->getProduct();
+$_wishlistSubmitParams = $this->helper('Magento\Wishlist\Helper\Data')->getAddParams($_product);
+$compareHelper = $this->helper('Magento\Catalog\Helper\Product\Compare');
+
+$ves = $this->helper('Ves\Themesettings\Helper\Theme');
+$show_compare = $ves->getProductPageCfg('element_settings/show_compare');
+$show_wishlist = $ves->getProductPageCfg('element_settings/show_wishlist');
+$show_email = $ves->getProductPageCfg('element_settings/show_email');
+$show_sharelinks = $ves->getProductPageCfg('element_settings/show_sharelinks');
+?>
+
+<?php if($show_compare || $show_wishlist || $show_email){ ?>
+<div class="product-addto-links" data-role="add-to-links">
+    <?php if ($this->helper('Magento\Wishlist\Helper\Data')->isAllow() && $show_wishlist) : ?>
+        <a href="#"
+        class="add-to-wishlist"
+        data-post='<?php /* @escapeNotVerified */ echo $_wishlistSubmitParams; ?>'
+        data-action="add-to-wishlist"><span><?php /* @escapeNotVerified */ echo __('<i class="fa fa-heart-o"></i>') ?></span></a>
+    <?php endif; ?>
+    <?php if($show_compare){ ?>
+    <a href="#" data-post='<?php /* @escapeNotVerified */ echo $compareHelper->getPostDataParams($_product);?>'
+        data-role="add-to-links"
+        class="add-to-compare"><span><?php /* @escapeNotVerified */ echo __('<i class="zmdi zmdi-file-text"></i>') ?></span></a>
+        <?php } ?>
+
+        <?php if($show_email){ ?>
+        <?php if ($block->canEmailToFriend()): ?>
+            <a href="<?php /* @escapeNotVerified */ echo $this->helper('Magento\Catalog\Helper\Product')->getEmailToFriendUrl($_product) ?>"
+             class="mailto1 friend"><span><?php /* @escapeNotVerified */ echo __('<i class="fa fa-envelope-o"></i>
+             Email') ?></span></a>
+         <?php endif; ?>
+         <?php } ?>
+
+         <?php if($show_sharelinks){ ?>
+         <?php $_helper = $this->helper('Magento\Catalog\Helper\Output'); ?>
+         <?php $_productName = urlencode(trim($_helper->productAttribute($_product, $_product->getName(), 'name')))?>
+         <?php $_productImageUrl = urlencode(trim($this->helper('Magento\Catalog\Helper\Image')->init($_product, 'product_page_image_large')->getUrl()))?>
+         <?php $_productUrl = urlencode(trim($_product->getProductUrl()))?>
+
+         <?php $_u = 'p[url]=' . $_productUrl . '&p[images][0]=' . $_productImageUrl . '&p[title]=' . $_productName . '&p[summary]=' . urlencode(trim($_helper->productAttribute($_product, nl2br($_product->getShortDescription()), 'short_description'))); ?>
+         <a href="<?php echo 'http://www.facebook.com/sharer.php?s=100&' . $_u; ?>" target="_blank" title="<?php echo __('Share on Facebook') ?>" class="link-facebook">
+            <?php echo __('Share Facebook') ?>
+        </a>
+        <a href="<?php echo 'http://twitter.com/home?status=' . $_productName . '+' . $_productUrl; ?>" target="_blank" title="<?php echo __('Share on Twitter') ?>" class="link-twitter"><?php echo __('Share on Twitter') ?></a>
+        <?php } ?>
+
+    </div>
+    <?php } ?>
+    <?php if($show_wishlist){ ?>
+    <script type="text/x-magento-init">
+        {
+            "body": {
+                "addToWishlist": <?php /* @escapeNotVerified */ echo $this->helper('Magento\Framework\Json\Helper\Data')->jsonEncode($block->getWishlistOptions())?>
+            }
+        }
+    </script>
+    <?php } ?>

@@ -1,0 +1,140 @@
+<?php
+/**
+ * Copyright © 2015 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+/** @var $block \Magento\Catalog\Block\Product\View */
+?>
+<?php $_product = $block->getProduct(); ?>
+<?php
+$ves = $this->helper('Ves\Themesettings\Helper\Theme');
+$show_addtocart = $ves->getProductPageCfg('element_settings/show_addtocart');
+
+$helper = $this->helper('Magento\Checkout\Helper\Cart');
+$cart = $helper->getCart();
+$quote = $cart->getQuote();
+$item = $quote->getItemByProduct($_product);
+$qty = 0;
+if($item){
+    $qty = $item->getQty();
+}
+$productId = time().rand();
+?>
+<?php if($show_addtocart){ ?>
+    <?php $buttonTitle = __('Add to Cart'); ?>
+    <?php if ($_product->isSaleable()): ?>
+    <div class="box-tocart">
+        <div class="fieldset">
+            <?php if ($block->shouldRenderQuantity()): ?>
+            <div class="field qty">
+                <label class="label" for="qty"><span><?php /* @escapeNotVerified */ echo __('Quanty:') ?></span></label>
+                <div class="control">
+                    <div class="quantity-adder">
+                        <div class="itema quantity-adder">
+                            <input type="hidden" name="vesgol" value="1">
+                            <span class="add-up add-action add-action<?php echo $productId ?> fa fa-plus" data-parentqty="true"></span>
+                            <input type="number"
+                            style="display: none"
+                            name="qty"
+                            id="qty"
+                            data-productid="<?php echo $_product->getid() ?>"
+                            maxlength="12"
+                            value="<?php /* @escapeNotVerified */ echo (int)$qty ?>"
+                            title="<?php /* @escapeNotVerified */ echo __('Quantity') ?>"
+                            class="input-text qty qty<?php echo $productId ?> product-cartitem product-cartnumber<?php echo $_product->getId(); ?>"
+                            data-validate="<?php echo $block->escapeHtml(json_encode($block->getQuantityValidators())) ?>"
+                            />
+                            <div id="product-cart<?php echo $productId ?>" data-productid="<?php echo $_product->getid() ?>" class="product-cartitem product-cartnumber<?php echo $_product->getId(); ?>"><?php echo $qty?$qty:'0'; ?></div>
+                            <span class="add-down add-action add-action<?php echo $productId ?> fa fa-minus" data-parentqty="true"></span>
+                        </div>
+                    </div>
+                    <script type="text/javascript">
+                        require(["jquery"], function(){
+                            jQuery(window).ready( function(){
+                                jQuery(".add-action<?php echo $productId ?>").click( function(){
+                                    var formAction  = jQuery('#product_addtocart_form').attr("action");
+                                    if( jQuery(this).hasClass('add-up') ) {
+                                        if(parseInt(jQuery(".qty<?php echo $productId ?>").val())< <?php echo $ves->getConfig('item_options/max_sale_qty','cataloginventory') ?>){
+                                            var qty = parseInt(jQuery(".qty<?php echo $productId ?>").val()) + 1;
+                                            jQuery(".qty<?php echo $productId ?>").val(qty);
+                                            jQuery('.product-cartnumber'+<?php echo $_product->getId() ?>).html(qty);
+                                            jQuery('.product-cartnumber'+<?php echo $_product->getId() ?>).val(qty);
+                                            if(qty==1){
+                                                jQuery('.vesproduct-cartnumber<?php echo $_product->getId(); ?>').show();
+                                            }
+                                            jQuery('#product_addtocart_form').attr("action", formAction).submit();
+                                        }
+                                    } else {
+                                        if( parseInt(jQuery(".qty<?php echo $productId ?>").val())  > 0 ) {
+                                            formAction = formAction.replace("checkout/cart/add","checkout/cart/add/minus/1");
+                                            var qty = parseInt(jQuery(".qty<?php echo $productId ?>").val()) - 1;
+                                            jQuery('.product-cartnumber'+<?php echo $_product->getId() ?>).html(qty);
+                                            jQuery('.product-cartnumber'+<?php echo $_product->getId() ?>).val(qty);
+                                            if(qty==0){
+                                                jQuery('.vesproduct-cartnumber<?php echo $_product->getId(); ?>').hide();
+                                            }
+                                            jQuery('#product_addtocart_form').attr("action", formAction).submit();
+                                        }
+                                    }
+                                    return false;
+                                });
+                            })
+                        });
+                    </script>
+
+                </div>
+            </div>
+        <?php endif; ?>
+        <div class="actions">
+            <button type="submit"
+            title="<?php /* @escapeNotVerified */ echo $buttonTitle ?>" 
+            class="action primary tocart"
+            id="product-addtocart-button"
+            style="display: none"
+            > 
+            <span><?php /* @escapeNotVerified */ echo $buttonTitle ?></span>
+        </button>
+        <?php echo $block->getChildHtml('', true) ?>
+    </div>
+</div>
+</div>
+<?php endif; ?>
+<?php if ($block->isRedirectToCartEnabled()) : ?>
+    <script type="text/x-magento-init">
+        {
+            "#product_addtocart_form": {
+                "Magento_Catalog/product/view/validation": {
+                    "radioCheckboxClosest": ".nested"
+                }
+            }
+        }
+    </script>
+<?php else : ?>
+    <script>
+        require([
+            'jquery',
+            'mage/mage',
+            'Magento_Catalog/product/view/validation',
+            'Magento_Catalog/js/catalog-add-to-cart'
+            ], function ($) {
+                'use strict';
+
+                $('#product_addtocart_form').mage('validation', {
+                    radioCheckboxClosest: '.nested',
+                    submitHandler: function (form) {
+                        var widget = $(form).catalogAddToCart({
+                            bindSubmit: false
+                        });
+
+                        widget.catalogAddToCart('submitForm', $(form));
+
+                        return false;
+                    }
+                });
+            });
+    </script>
+<?php endif; ?>
+<?php } ?>

@@ -1,0 +1,34 @@
+
+*** These modified files were found in JOE when it aborted on Mon Jan 29 01:24:13 2018
+*** JOE was aborted because the terminal closed
+
+*** File '(Unnamed)'
+total 0
+total 0
+
+*** File '(Unnamed)'
+setLoadInactive
+seamless
+seamless
+molpay
+seamless
+code
+getMethodModelConfigName
+SeamlessFacade
+sandbox
+Seamless
+
+*** File '(Unnamed)'
+web/template/payment/form.html
+view/frontend/web/template/payment/form.html
+view/frontend/web/template/payment/form.html
+view/frontend/web/template/payment/form.html
+etc/frontend/routes.xml
+view/frontend/layout/
+view/frontend/layout/sandboxseamless_index_index.xml
+view/frontend/web/template/payment/form.html
+view/frontend/web/template/payment/form.html
+view/frontend/web/template/payment/form.html
+Controller/Index/Index.php
+Controller/Index/Index.php
+Controller/Index/Index.php

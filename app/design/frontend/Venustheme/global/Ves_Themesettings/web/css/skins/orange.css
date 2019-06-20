@@ -1,0 +1,76 @@
+body .page-wrapper a:hover, body .page-wrapper .alink:hover, a:focus,
+a:visited, .alink:visited,
+.block .block-title,
+.block .block-title strong,
+.nav-toggle:before,
+.block-search .label:before,
+.breadcrumbs .item strong,
+.page-footer li a:hover,
+.copyright li a:hover,
+.ves-megamenu li.level0 .fa,
+div .ves-megamenu.ves-vertical li.level0 > a i,
+.product-item-info .product-item-name a:hover,
+.productlist-widget ul.etabs > li.tab > a:hover, 
+.productlist-widget ul.etabs > li.tab > a:focus,
+div .ves-megamenu .dropdown-menu a:hover, 
+div .ves-megamenu .dropdown-menu .subgroup.level1 > a:hover, 
+div .ves-megamenu .dropdown-menu .subgroup .subgroup .dropdown-mega a:hover,
+.product-info-main .product-addto-links a:hover, 
+.product-options-bottom .product-addto-links a:hover,
+.cart.table-wrapper .actions-toolbar > .action-edit:before, 
+.cart.table-wrapper .actions-toolbar > .action-delete:before,
+.ves-menutop .ves-megamenu .dropdown-menu a:hover, 
+.ves-menutop .ves-megamenu .dropdown-menu .subgroup.level1 > a:hover, 
+.ves-menutop .ves-megamenu .dropdown-menu .subgroup .subgroup .dropdown-mega a:hover,
+.sidebar .block.filter .filter-options .filter-options-content a:hover
+{color: #ff542a;}
+
+.ves-megamenu.ves-vertical li.level0 > a:hover{color: #ff542a!important;}
+
+.product.info.detailed .data .title.active > .switch:before{border-color: #ff542a transparent transparent;}
+.fotorama__nav-wrap .fotorama__thumb-border:before {border-color: transparent transparent #ff542a;}
+.fotorama__nav-wrap .fotorama__thumb-border{border-top-color: #ff542a !important;}
+
+.button,
+button:not(.action-edit):not(.action-cancel):not(.action-close):not(.close):not(.action-hide-popup),
+button:hover:not(.action-edit):not(.action-cancel):not(.action-close):not(.close):not(.action-hide-popup), 
+button:focus:not(.action-edit):not(.action-cancel):not(.action-close):not(.close):not(.action-hide-popup),
+.action.primary,
+.action.primary:hover,
+.button:hover, .button:focus,
+.ves-contact .media .fa,
+.cart-container .form-cart .action.continue,
+.scrollup {
+ background-color: #ff542a !important;
+}
+
+.scrollup:hover{
+   background-color: #3399c9;
+}
+
+.page-footer .widget-carousel, .sidebar .block .block-title, .block.related .block-title,
+.block.upsell .block-title, .block-theme .widget-contenthtml .block-title{border-color: #ff542a;}
+
+.ves-megamenu.ves-vertical li.level0 > a .fa, .ves-megamenu.ves-vertical li.level0 > a .zmdi,
+.category_filter.pull-left .fa-caret-down, .page-footer .nav-links li::before, .page-footer .widget-html .zmdi,
+.page-footer .widget-carousel .item-content .pull-left, 
+.productlist-widget .countdown-timmer .item-countdown ul li:first-child > div, 
+.productlist-widget .countdown-timmer .item-countdown ul li:first-child > div.countdown_num span,
+.minicart-wrapper .action.close::before, .modal-custom .action-close::before, 
+.modal-popup .action-close::before, .modal-slide .action-close::before{color: #ff542a;}
+
+.page-header .ves-header2 .ves-menutop, .minicart-wrapper .action.showcart,
+.search-wrapper .search_box .button-search, .product-block .quantity-adder .add-action,
+.product-block .product-cartitem, .page-wrapper .toolbar .modes .modes-mode.active,
+.catalog-product-view .product-info-main .quantity-adder .product-cartitem, 
+.catalog-product-view .product-options-bottom .quantity-adder .product-cartitem,
+.catalog-product-view .product-info-main .quantity-adder .add-action, 
+.catalog-product-view .product-options-bottom .quantity-adder .add-action,
+.minicart-wrapper .quantity-adder .add-action, .minicart-wrapper .quantity-adder .cart-number,
+.page-wrapper .imageslider-widget .btn
+{background: #ff542a;}
+
+@media (max-width: 767px) {
+	.header-content .minicart-wrapper .w-item .counter-number{background: #ff542a;}
+ 	.page-footer .widget-carousel .block-content{border-color: #ff542a;}
+}

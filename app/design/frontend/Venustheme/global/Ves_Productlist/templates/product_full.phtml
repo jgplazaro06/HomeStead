@@ -1,0 +1,14 @@
+<?php
+$helper = $this->helper('Ves\Themesettings\Helper\Data');
+$_coreRegistry = $helper->getCoreRegistry();
+$_product = $_coreRegistry->registry('current_product');
+?>
+<div class="btn-viewdetail"><?php echo __('View full details'); ?></div>
+<script type="text/javascript">
+require(['jquery'], function($){
+	jQuery('.btn-viewdetail').on('click', function(){
+		parent.jQuery.fancybox.close();
+		parent.window.location.href = "<?php echo $_product->getProductUrl() ?>";
+	})
+})
+</script>

@@ -1,0 +1,167 @@
+// /**
+//  * Copyright © 2015 Magento. All rights reserved.
+//  * See COPYING.txt for license details.
+//  */
+
+//
+//    Common
+//--------------------------------------
+
+@toolbar-mode-icon-font-size: 16px;
+@toolbar-background: transparent;
+@toolbar-element-background: @color-gray94;
+@pager-action__background: @toolbar-element-background;
+@pager-action__hover__background: darken(@toolbar-element-background, 7%);
+@pager__font-weight: @font-weight__bold;
+
+& when (@media-common = true) {
+
+.page-products .columns {
+    position: relative;
+    z-index: 1;
+}
+
+.toolbar {
+    padding: 10px 0 20px;
+    &:extend(.abs-add-clearfix all);
+    label, strong, span{
+        font-weight: 500;
+        font-size: @font-size-base - 2;
+        color: @theme-color-secondary;
+        text-transform: uppercase;
+    }
+    &-amount {
+        display: none;
+        font-size: @font-size-base - 2;
+        line-height: @toolbar-mode-icon-font-size+2;
+        padding: 8px 0 0;
+        margin: 0;
+        vertical-align: middle;
+        .products.wrapper ~ .toolbar & {
+            display: block;
+        }
+        span{color: @theme-color-default;}
+    }
+    &-products {
+        text-align: center;
+        &:extend(.abs-add-clearfix all);
+        .pages {
+            display: none;
+            .products.wrapper ~ & {
+                display: block;
+            }
+        }
+        .limiter .control {
+            display: inline-block;
+        }
+    }
+}
+
+.sorter {
+    .rtl-margin-left(5%);
+    .float-right();
+    .products.wrapper ~ .toolbar & {
+        display: none;
+    }
+    &-options {
+        margin: 0 0 0 7px;
+        width: auto;
+    }
+    &-action {
+        vertical-align: top;
+        .lib-icon-font(
+            @icon-arrow-up,
+            @_icon-font-size: 14px,
+            @_icon-font-line-height: 32px,
+            @_icon-font-color: @header-icons-color,
+            @_icon-font-color-hover: @header-icons-color-hover,
+            @_icon-font-text-hide: true
+        );
+        &.sort-desc:before {
+            content: @icon-arrow-down;
+        }
+    }
+}
+
+.modes {
+    display: none;
+}
+
+.limiter {
+    &-options {
+        width: auto;
+        margin: 0 5px 0 7px;
+    }
+    &-label {
+        font-weight: 400;
+    }
+}
+
+}
+
+//
+//  Mobile
+//  ---------------------------------------------
+
+.media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__s) {
+    .page-products .columns {
+        position: relative;
+        z-index: 1;
+        padding-top: 0;
+    }
+    .toolbar {
+        .products.wrapper ~ & .pages {
+            .float-left();
+        }
+        select{
+            border-color: #e6e6e6;
+            line-height: 36px;
+            height: 36px;
+        }
+        &-amount {
+            .float-right();
+        }
+    }
+    .modes {
+        .float-left();
+        display: inline-block;
+        line-height: 36px;
+        .products.wrapper ~ .toolbar & {
+            display: none;
+        }
+        &-mode {
+            .lib-css(color, @color-gray60);
+            font-weight: @font-weight__regular;
+            line-height: 1;
+            text-align: center;
+            margin-left: 6px;
+
+            .inline-block();
+            vertical-align: middle;
+            line-height: 28px;
+            .size(30px, 30px);
+            border: 1px solid #e6e6e6;
+            &:not(.active):hover {
+                .lib-css(color, @theme-color-secondary);
+            }
+            
+            &.active {
+                .lib-css(color, @theme-color-secondary);
+            }
+            .lib-icon-font(
+                @icon-grid,
+                @_icon-font-size: @toolbar-mode-icon-font-size - 4,
+                @_icon-font-text-hide: true
+            );
+        }
+    }
+    .mode-list {
+        .lib-icon-font-symbol(@icon-list);
+    }
+    .limiter {
+        .float-right();
+        .products.wrapper ~ .toolbar & {
+            display: none;
+        }
+    }
+}

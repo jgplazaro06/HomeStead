@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ <!--
+/**
+ * Venustheme
+ * 
+ * NOTICE OF LICENSE
+ * 
+ * This source file is subject to the venustheme.com license that is
+ * available through the world-wide-web at this URL:
+ * http://venustheme.com/license
+ * 
+ * DISCLAIMER
+ * 
+ * Do not edit or add to this file if you wish to upgrade this extension to newer
+ * version in the future.
+ * 
+ * @category   Venustheme
+ * @package    Ves_Autosearch
+ * @copyright  Copyright (c) 2016 Venustheme (http://www.venustheme.com/)
+ * @license    http://www.venustheme.com/LICENSE-1.0.html
+ */
+ -->
+<widgets xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Widget:etc/widget.xsd">
+    <widget id="ves_autosearch_widget" class="Ves\Autosearch\Block\Widget\CustomWidget">
+        <label translate="true">Autosearch Widget</label>
+        <description>Autosearch Widget</description>
+        <parameters>
+           <parameter name="tabsettings_heading" xsi:type="conditions" visible="true" sort_order="1" class="Ves\Autosearch\Block\Adminhtml\System\Config\Form\Field\Heading">
+				<label translate="true">General Seting</label>
+			</parameter>
+			<parameter name="show" xsi:type="select" visible="true" source_model="Magento\Config\Model\Config\Source\Yesno" sort_order="10">
+				<label translate="true">Enable Module</label>
+			</parameter>
+			<parameter name="prefix" xsi:type="text" visible="true" sort_order="11">
+				<label translate="true">Prefix Class</label>
+			</parameter>
+			<parameter name="show_filter_category" xsi:type="select" visible="true" source_model="Magento\Config\Model\Config\Source\Yesno" sort_order="20">
+				<label translate="true">Show Filter Category</label>
+			</parameter>
+			<parameter name="show_image" xsi:type="select" visible="true" source_model="Magento\Config\Model\Config\Source\Yesno" sort_order="30">
+				<label translate="true">Show Product Image</label>
+			</parameter>
+			<parameter name="thumb_width" xsi:type="text" visible="true" sort_order="40">
+				<label translate="true">Product Image Width</label>
+				<depends><parameter name="show_image" value="1" /></depends>
+				<value>100</value>
+			</parameter>			
+			<parameter name="thumb_height" xsi:type="text" visible="true" sort_order="50">
+				<label translate="true">Product Image Height</label>
+				<depends><parameter name="show_image" value="1" /></depends>
+				<value>100</value>
+			</parameter>
+			<parameter name="show_price" xsi:type="select" visible="true" source_model="Magento\Config\Model\Config\Source\Yesno" sort_order="60">
+				<label translate="true">Show Price</label>
+			</parameter>
+			<parameter name="show_short_description" xsi:type="select" visible="true" source_model="Magento\Config\Model\Config\Source\Yesno" sort_order="61">
+				<label translate="true">Show Short Description</label>
+			</parameter>
+			<parameter name="short_max_char" xsi:type="text" visible="true" sort_order="62">
+				<label translate="true">Description Character Limit</label>
+				<description translate="true"><![CDATA[Empty to show all short description]]></description>
+				<depends><parameter name="show_short_description" value="1" /></depends>
+				<value>100</value>
+			</parameter>
+			<parameter name="limit" xsi:type="text" visible="true" sort_order="70">
+				<label translate="true">Limit Results</label>
+				<value>5</value>
+			</parameter>
+			<parameter name="tabsettings_heading" xsi:type="conditions" visible="true" sort_order="100" class="Ves\Autosearch\Block\Adminhtml\System\Config\Form\Field\Heading">
+				<label translate="true">Keyword Terms</label>
+			</parameter>
+			<parameter name="enable_search_term" xsi:type="select" visible="true" source_model="Magento\Config\Model\Config\Source\Yesno" sort_order="100">
+				<label translate="true">Enabled Search Term</label>
+			</parameter>
+			<parameter name="limit_term" xsi:type="text" visible="true" sort_order="120">
+				<label translate="true">Limit Term</label>
+				<depends><parameter name="enable_search_term" value="1" /></depends>
+				<value>7</value>
+			</parameter>
+        </parameters>
+    </widget>
+</widgets>

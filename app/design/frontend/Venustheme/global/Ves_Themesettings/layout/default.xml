@@ -1,0 +1,119 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2015 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+	<head>
+		<remove src="Ves_Themesettings::css/owl.carousel.min.css" />
+		<css src="Ves_Themesettings::css/paneltool.css" />
+    	<css src="Ves_Themesettings::css/jquery.fancybox.css" />
+	</head>
+	<body>
+		<referenceBlock name="head.additional">
+			<block class="Ves\Themesettings\Block\Html\Head" name="ves.head" template="Ves_Themesettings::/html/head.phtml"/>
+		</referenceBlock>
+
+	    <referenceContainer name="header.container">
+            <block class="Ves\Themesettings\Block\Html\Links" name="top.links">
+                <arguments>
+                    <argument name="css_class" xsi:type="string">header links</argument>
+                </arguments>
+            </block>
+
+            <container name="ves_header" as="ves-header" label="Ves Header Container" htmlTag="div" htmlClass="ves-header"/> 
+
+            <block class="Ves\Themesettings\Block\Html\Header" name="ves_header"/> 
+        </referenceContainer>
+
+        <referenceBlock name="ves_header">
+            <block class="Magento\Framework\View\Element\Html\Links" name="header.links">
+                <arguments>
+                    <argument name="css_class" xsi:type="string">header links</argument>
+                </arguments>
+            </block>
+
+            <block class="Ves\Autosearch\Block\Autosearch" name="ves.autosearch"/>
+
+            <block class="Ves\Themesettings\Block\Template" name="custom_block" template="Ves_Themesettings::/html/header_custom_block.phtml" ifconfig="ves_themesettings_header/general_settings/static_block" after="-"/>
+
+            <!-- TOP LINKS: settings and navigation -->
+            <block class="Magento\Framework\View\Element\Template" name="setting_links" as="setting_links" template="Magento_Theme::html/setting.phtml">
+                <block class="Magento\Store\Block\Switcher" name="store_language" as="store_language" template="switch/languages.phtml"/>
+
+                <block class="Magento\Store\Block\Switcher" name="store_language_custom" as="store_language_custom" template="switch/languages.phtml" ifconfig="ves_themesettings_header/language_switcher_settings/language_switcher"/>
+
+                <block class="Magento\Directory\Block\Currency" name="currency" before="store_language_custom" template="currency.phtml" ifconfig="ves_themesettings_header/currency_switcher_settings/currency_switcher"/>
+            </block>
+
+            <block class="Magento\Framework\View\Element\Template" name="navigation.sections" before="-" template="Magento_Theme::html/navigation.phtml">
+                <block class="Magento\Framework\View\Element\Template" name="store.links" as="store_links" template="Magento_Theme::html/store_links.phtml"/>
+
+                <block class="Magento\Store\Block\Switcher" name="store_language" as="store_language_custom" template="switch/languages_custom.phtml"/>
+
+                <block class="Magento\Directory\Block\Currency" name="store.settings.currency" as="store_currency" before="store_language" template="currency_custom.phtml"/>
+
+                <block class="Ves\Megamenu\Block\Menu" name="menu-top3" template="Ves_Megamenu::menu_top.phtml" ttl="3600">
+                    <action method="setData">
+                        <argument name="name" xsi:type="string">alias</argument>
+                        <argument name="value" xsi:type="string">menu-vertical</argument>
+                    </action>
+                </block>
+            </block>
+
+            <!-- header 2 -->
+            <block class="Magento\Framework\View\Element\Template" name="navigation.sections2" before="-" template="Magento_Theme::html/navigation2.phtml">
+                <block class="Magento\Framework\View\Element\Template" name="store_links2" as="store_links2" template="Magento_Theme::html/store_links.phtml"/>
+                <block class="Magento\Store\Block\Switcher" name="store_language2" as="store_language_custom2" template="switch/languages_custom.phtml"/>
+                <block class="Magento\Directory\Block\Currency" name="store.settings.currency2" as="store_currency2" before="store_language" template="currency_custom.phtml"/>
+                <block class="Ves\Megamenu\Block\Menu" name="menu_top2" as="menu_top2" template="Ves_Megamenu::menu_top.phtml" ttl="3600">
+                    <action method="setData">
+                        <argument name="name" xsi:type="string">alias</argument>
+                        <argument name="value" xsi:type="string">menu-top</argument>
+                    </action>
+                    <action method="setData">
+                        <argument name="name" xsi:type="string">layout</argument>
+                        <argument name="value" xsi:type="string">horizontal</argument>
+                    </action>
+                </block>
+            </block>
+        </referenceBlock>
+
+        <move element="navigation.sections" destination="ves_header"/>
+        <move element="navigation.sections2" destination="ves_header"/>
+        <move element="top.links" as="top_links" destination="ves_header"/>
+        <move element="logo" as="logo" destination="ves_header"/>
+        <move element="minicart" as="minicart" destination="ves_header"/>
+        <move element="ves.autosearch" destination="ves_header"/>
+        <move element="skip_to_content" as="skip_to_content" destination="ves_header"/>
+
+        <!-- Footer Container -->
+        <referenceContainer name="footer-container">
+            <container name="footer" as="footer" label="Page Footer" htmlTag="div" htmlClass="ves-footer page-main">
+                <container name="footer-top" label="Footer Top" htmlTag="div" htmlClass="footer-top">
+                    <block class="Ves\Themesettings\Block\Html\Footer" name="ves.footer.top" template="Ves_Themesettings::html/footer/footer-top.phtml"/>
+                </container>
+                <container name="footer-center" label="Footer Center" htmlTag="div" htmlClass="footer-center" after="footer-top">
+                    <block class="Ves\Themesettings\Block\Html\Footer" name="ves.footer.center" template="Ves_Themesettings::html/footer/footer-center.phtml"/>
+                </container>
+                <container name="footer-bottom" label="Footer Bottom" htmlTag="div" htmlClass="footer-bottom" after="footer-center">
+                    <block class="Ves\Themesettings\Block\Html\Footer" name="ves.footer.bottom" template="Ves_Themesettings::html/footer/footer-bottom.phtml"/>
+                </container>
+                <remove name="form.subscribe"/>
+                <block class="Magento\Framework\View\Element\Template" name="report.bugs" template="Magento_Theme::html/bugreport.phtml" />
+            </container>
+        </referenceContainer>
+        <!-- End Footer Container -->
+
+        <!-- Before Body End -->
+		<referenceContainer name="before.body.end">
+			<block class="Magento\Theme\Block\Html\Footer" name="copyright" template="Ves_Themesettings::html/footer/copyright.phtml"/>
+			<block class="Magento\Framework\View\Element\Template" name="scrolltop" template="Ves_Themesettings::html/scrolltop.phtml" />
+			<block class="Magento\Framework\View\Element\Template" name="custom.js" template="Ves_Themesettings::customjs.phtml" />
+			<block class="Magento\Framework\View\Element\Template" name="ajax.js" template="Ves_Themesettings::ajax/js.phtml" />
+			<block class="Ves\Themesettings\Block\PanelTool" name="paneltool" template="Ves_Themesettings::paneltool/paneltool.phtml" />
+		</referenceContainer>
+	</body>
+</page>

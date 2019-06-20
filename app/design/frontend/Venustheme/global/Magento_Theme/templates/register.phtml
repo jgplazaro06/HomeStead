@@ -1,0 +1,115 @@
+<?php
+/**
+ * Copyright © 2016 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+?>
+<?php
+/**
+ * Create account form template
+ *
+ * @var $block \Magento\Customer\Block\Form\Register
+ */
+?>
+<?php echo $block->getChildHtml('form_fields_before')?>
+<?php /* Extensions placeholder */ ?>
+<?php echo $block->getChildHtml('customer.form.register.extra')?>
+<div class="block block-customer-register">
+    <div class="block-title">
+        <strong id="block-customer-register-heading" role="heading" aria-level="2"><?php /* @escapeNotVerified */ echo __('Customers Register') ?></strong>
+    </div>
+<form class="form create account form-create-account" action="<?php echo $block->getPostActionUrl() ?>" method="post" id="ves-formvalidate" enctype="multipart/form-data" autocomplete="off">
+	<fieldset class="fieldset create info">
+		<input type="hidden" name="success_url" value="<?php echo $block->getSuccessUrl() ?>">
+		<input type="hidden" name="error_url" value="<?php echo $block->getErrorUrl() ?>">
+		<?php echo $block->getLayout()->createBlock('Magento\Customer\Block\Widget\Name')->setObject($block->getFormData())->setForceUseCustomerAttributes(true)->toHtml() ?>
+		<div class="field required">
+			<label for="email_address" class="label"><span><?php echo __('Email') ?></span></label>
+			<div class="control">
+				<input type="email" name="email" id="email_address" value="<?php echo $block->escapeHtml($block->getFormData()->getEmail()) ?>" title="<?php echo __('Email') ?>" class="input-text" data-validate="{required:true, 'validate-email':true}">
+			</div>
+		</div>
+	<?php if ($block->isNewsletterEnabled()): ?>
+            <div class="field choice newsletter">
+                <input type="checkbox" name="is_subscribed" title="<?php /* @escapeNotVerified */ echo __('Sign Up for Newsletter') ?>" value="1" id="is_subscribed"<?php if ($block->getFormData()->getIsSubscribed()): ?> checked="checked"<?php endif; ?> class="checkbox">
+                <label for="is_subscribed" class="label"><span><?php /* @escapeNotVerified */ echo __('Sign Up for Newsletter') ?></span></label>
+            </div>
+            <?php /* Extensions placeholder */ ?>
+            <?php echo $block->getChildHtml('customer.form.register.newsletter')?>
+        <?php endif ?>
+		<?php $_dob = $block->getLayout()->createBlock('Magento\Customer\Block\Widget\Dob') ?>
+		<?php if ($_dob->isEnabled()): ?>
+			<?php echo $_dob->setDate($block->getFormData()->getDob())->toHtml() ?>
+		<?php endif ?>
+	</fieldset>
+	<fieldset class="fieldset create account" data-hasrequired="<?php echo __('* Required Fields') ?>">
+		<div class="field password required">
+			<label for="password" class="label"><span><?php echo __('Password') ?></span></label>
+			<div class="control">
+				<input type="password" name="password" id="password" title="<?php echo __('Password') ?>" class="input-text" data-validate="{required:true, 'validate-password':true}" autocomplete="off">
+			</div>
+		</div>
+		<div class="field confirmation required">
+			<label for="password-confirmation" class="label"><span><?php echo __('Confirm Password') ?></span></label>
+			<div class="control">
+				<input type="password" name="password_confirmation" title="<?php echo __('Confirm Password') ?>" id="password-confirmation" class="input-text" data-validate="{required:true, equalTo:'#password'}" autocomplete="off">
+			</div>
+		</div>
+		<?php echo $block->getChildHtml('form_additional_info'); ?>
+	</fieldset>
+	<div class="actions-toolbar">
+		<div class="primary">
+			<button type="submit" class="action submit primary" title="<?php echo __('Register now') ?>"><span><?php echo __('Register now') ?></span></button>
+		</div>
+	</div>
+</form>
+</div>
+<script>
+	require([
+		'jquery',
+		'mage/mage'
+		], function($){
+			var dataForm = $('#ves-formvalidate');
+			var ignore = <?php echo $_dob->isEnabled() ? '\'input[id$="full"]\'' : 'null'; ?>;
+			dataForm.mage('validation', {
+				<?php if ($_dob->isEnabled()): ?>
+				errorPlacement: function(error, element) {
+					if (element.prop('id').search('full') !== -1) {
+						var dobElement = $(element).parents('.customer-dob'),
+						errorClass = error.prop('class');
+						error.insertAfter(element.parent());
+						dobElement.find('.validate-custom').addClass(errorClass)
+						.after('<div class="' + errorClass + '"></div>');
+					}
+					else {
+						error.insertAfter(element);
+					}
+				},
+				ignore: ':hidden:not(' + ignore + ')'
+			<?php else: ?>
+			ignore: ignore ? ':hidden:not(' + ignore + ')' : ':hidden'
+		<?php endif ?>
+	}).find('input:text').attr('autocomplete', 'off');
+		});
+	</script>
+	<?php if ($block->getShowAddressFields()): ?>
+		<script type="text/x-magento-init">
+			{
+			"#country": {
+			"regionUpdater": {
+			"optionalRegionAllowed": <?php echo($block->getConfig('general/region/display_all') ? 'true' : 'false'); ?>,
+			"regionListId": "#region_id",
+			"regionInputId": "#region",
+			"postcodeId": "#zip",
+			"form": "#ves-formvalidate",
+			"regionJson": <?php echo $this->helper('Magento\Directory\Helper\Data')->getRegionJson() ?>,
+			"defaultRegion": "<?php echo $block->getFormData()->getRegionId() ?>",
+			"countriesWithOptionalZip": <?php echo $this->helper('Magento\Directory\Helper\Data')->getCountriesWithOptionalZip(true) ?>
+		}
+	}
+}
+</script>
+<?php endif; ?>

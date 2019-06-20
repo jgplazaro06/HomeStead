@@ -1,0 +1,79 @@
+// /**
+//  * Copyright © 2015 Magento. All rights reserved.
+//  * See COPYING.txt for license details.
+//  */
+
+//
+//    Common
+//--------------------------------------
+
+& when (@media-common = true) {
+
+//
+//    Newsletter subscription
+//--------------------------------------
+.block.newsletter {
+    .form.subscribe {
+        display: table;
+        width: 100%;
+        position: relative;
+    }
+    .fieldset {
+        display: table-cell;
+        margin: 0;
+        padding: 0;
+        vertical-align: top;
+    }
+    .field {
+        margin: 0;
+        .control {
+            padding-top: 22px;
+            .lib-icon-font(
+                @icon-envelope,
+                @_icon-font-size: 16px,
+                @_icon-font-line-height: 32px,
+                @_icon-font-color: @form-element-input-placeholder__color,
+                @_icon-font-margin: 0 0 0 8px
+            );
+            &:before {
+                position: absolute;
+                padding-top: 3px;
+            }
+            display: block;
+            div.mage-error[generated]{position: absolute;}
+        }
+    }
+    input {
+        padding-left: 35px;
+        height: 40px;
+        border-color: #e5e5e5;
+        background: #fff;
+    }
+    .title {
+        display: none;
+    }
+    .label {
+        width: 100%;
+        span{white-space:normal;}
+    }
+    .actions {
+        vertical-align: top;
+        position: absolute;
+        .rtl-right(0);
+        bottom:0;
+    }
+    .action.subscribe {
+        color: @white;
+        font-size: 13px;
+        font-weight: 600;
+        text-transform: uppercase;
+        font-family: 'Poppins', sans-serif;
+        border:0;
+        border-radius:0;
+        line-height: 30px;
+        height: 40px;
+    }
+}
+
+}
+

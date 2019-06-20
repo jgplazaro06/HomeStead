@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Landofcoder
+ * 
+ * NOTICE OF LICENSE
+ * 
+ * This source file is subject to the landofcoder.com license that is
+ * available through the world-wide-web at this URL:
+ * http://landofcoder.com/license
+ * 
+ * DISCLAIMER
+ * 
+ * Do not edit or add to this file if you wish to upgrade this extension to newer
+ * version in the future.
+ * 
+ * @category   Landofcoder
+ * @package    Lof_Autosearch
+ * @copyright  Copyright (c) 2016 Landofcoder (http://www.landofcoder.com/)
+ * @license    http://www.landofcoder.com/LICENSE-1.0.html
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+        <!--
+		<css src="Ves_All::lib/owl.carousel/owl.carousel.min.css" />
+		<css src="Ves_All::lib/bootstrap/css/bootstrap.min.css" />
+		<css src="Ves_All::lib/bootstrap/css/bootstrap-tiny.css" />
+		<css src="Ves_All::lib/colorbox/colorbox.css" />
+		<css src="Ves_All::lib/fancybox/jquery.fancybox.css" />
+        -->
+        <!--<css src="Ves_All::css/fix_magento2.css" />-->
+        <body>
+        	
+        </body>
+</page>

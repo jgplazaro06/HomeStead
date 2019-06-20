@@ -1,0 +1,97 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Venustheme
+ * 
+ * NOTICE OF LICENSE
+ * 
+ * This source file is subject to the venustheme.com license that is
+ * available through the world-wide-web at this URL:
+ * http://venustheme.com/license
+ * 
+ * DISCLAIMER
+ * 
+ * Do not edit or add to this file if you wish to upgrade this extension to newer
+ * version in the future.
+ * 
+ * @category   Venustheme
+ * @package    Ves_Autosearch
+ * @copyright  Copyright (c) 2016 Venustheme (http://www.venustheme.com/)
+ * @license    http://www.venustheme.com/LICENSE-1.0.html
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../Config/etc/system_file.xsd"> 
+	<system>
+		<!-- <tab id="venustheme" translate="label" sortOrder="400">
+			<label><![CDATA[Ves All - <a href="http://venustheme.com" target="_BLANK" title=""Magento Marketplace, Opencart Marketplace, Magento 2 Extension, Free Magento Extension, Opencart Advanced Reports">venustheme.com</a>]]></label>
+		</tab> -->
+		<section id="vesautosearch" translate="label" type="text" sortOrder="0" showInDefault="1" showInWebsite="1" showInStore="1">
+			<class>separator-top</class>
+			<label>Auto Search</label>
+			<tab>vesalltab</tab>
+			<resource>Ves_Autosearch::config</resource>
+			<group id="general" translate="label" type="text" sortOrder="0" showInDefault="1" showInWebsite="1" showInStore="1">
+				<label>General Settings</label>				
+				<field id="show" translate="label comment" type="select" sortOrder="0" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Enabled Module</label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="prefix" translate="label comment" type="text" sortOrder="5" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Prefix Class</label>
+				</field>
+				<field id="show_filter_category" translate="label comment" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Show Filter Category</label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="show_image" translate="label comment" type="select" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Show Product Image</label>
+					<comment>Show/hide product image in results</comment>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="thumb_width" translate="label comment" type="text" sortOrder="25" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Product Image Width</label>
+					<depends>
+						<field id="show_image">1</field>
+					</depends>
+				</field>
+				<field id="thumb_height" translate="label comment" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Product Image Height</label>
+					<depends>
+						<field id="show_image">1</field>
+					</depends>
+				</field>
+				<field id="show_price" translate="label comment" type="select" sortOrder="35" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Show Product Price</label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="show_short_description" translate="label comment" type="select" sortOrder="36" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Show Short Description</label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="short_max_char" translate="label comment" type="text" sortOrder="37" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Description Character Limit</label>
+					<comment><![CDATA[Empty to show all short description]]></comment>
+					<depends>
+						<field id="show_short_description">1</field>
+					</depends>
+				</field>
+				<field id="limit" translate="label comment" type="text" sortOrder="38" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Limit Results</label>
+				</field>
+			</group>
+			<group id="search_terms" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+				<label>Keyword Terms</label>
+				<field id="enable_search_term" translate="label comment" type="select" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Enabled</label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="limit_term" translate="label comment" type="text" sortOrder="45" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Limit Terms</label>
+					<depends>
+						<field id="enable_search_term">1</field>
+					</depends>
+				</field>
+			</group>
+		</section>
+	</system>
+</config>

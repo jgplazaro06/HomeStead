@@ -1,0 +1,126 @@
+<?php
+/**
+ * Copyright © 2015 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+/** @var $block \Magento\Checkout\Block\Cart\Sidebar */
+?>
+<?php
+$ves = $this->helper('Ves\Themesettings\Helper\Theme');
+// Car Design
+$cart_format = $ves->getHeaderCfg('top_cart/cart_format');
+$cart_text = $ves->getHeaderCfg('top_cart/cart_text');
+$cart_class = $ves->getHeaderCfg('top_cart/cart_class');
+
+$cartText = '<span class="label">'.$cart_text.'</span>';
+$cartIcon = '<i class="fa '.$cart_class.'"></i>';
+?>
+<?php $cartHtml = ''; ?>
+<?php if((!$cart_format || $cart_format == 'text') && $cart_text){ // Only Text ?>
+    <?php $cartHtml = $cartText; ?>
+    <?php }elseif($cart_format == 'icon'){ // Icon, Text ?>
+        <?php $cartHtml = $cartIcon; ?>
+        <?php }elseif($cart_format == 'icon-text'){ // Icon, Text ?>
+            <?php $cartHtml = $cartIcon.$cartText; ?> 
+            <?php }elseif($cart_format == 'text-icon'){ // Text, Icon ?>
+                <?php $cartHtml = $cartText.$cartIcon; ?>
+                <?php } ?>
+                <div data-block="minicart" class="minicart-wrapper f-right">
+                    <a class="action showcart" href="<?php /* @escapeNotVerified */ echo $block->getShoppingCartUrl(); ?>" data-bind="scope:'minicart_content'">        
+                        <span class="w-item">
+                            <?php if($cartHtml) {echo $cartHtml; } 
+                            else {?>
+                                <span class="cart-title hidden-xs"><?php /* @escapeNotVerified */ echo __('My Cart'); ?></span>
+                                <?php }?>
+                                <span class="counter total-qty empty"
+                                data-bind="css: { empty: !!getCartParam('summary_count') == false }, blockLoader: isLoading">
+                                <span class="counter-number"><!-- ko text: getCartParam('summary_count') --><!-- /ko --><span class="hidden-xs"><?php echo __(' Items'); ?></span></span>
+                                <span class="counter-label hidden">
+                                    <!-- ko if:  getCartParam('summary_count') -->
+                                    <!-- ko text: getCartParam('summary_count') --><!-- /ko -->
+                                    <!-- ko i18n: 'items' --><!-- /ko -->
+                                    <!-- /ko -->
+                                </span>
+                                <!-- <span class="counter-price hidden" data-bind="attr: { 'data-label': $t('Excl. Tax') }, html: cart().subtotal"></span> -->
+                            </span>
+                        </span>
+                    </a>
+                    <?php if ($block->getIsNeedToDisplaySideBar()): ?>
+                        <div class="block block-minicart empty"
+                        data-role="dropdownDialog"
+                        data-mage-init='{"dropdownDialog":{
+                        "appendTo":"[data-block=minicart]",
+                        "triggerTarget":".showcart",
+                        "timeout": "2000",
+                        "closeOnMouseLeave": false,
+                        "closeOnEscape": true,
+                        "triggerClass":"active",
+                        "parentClass":"active",
+                        "buttons":[]}}'>
+                        <div id="minicart-content-wrapper" data-bind="scope: 'minicart_content'">
+                            <!-- ko template: getTemplate() --><!-- /ko -->
+                        </div>
+                    </div>
+                <?php endif ?>
+                <script>
+                    window.checkout = <?php /* @escapeNotVerified */ echo \Zend_Json::encode($block->getConfig()); ?>;
+                </script>
+                <script type="text/x-magento-init">
+                    {
+                    "[data-block='minicart']": {
+                    "Magento_Ui/js/core/app": <?php /* @escapeNotVerified */ echo $block->getJsLayout();?>
+                },
+                "*": {
+                "Magento_Ui/js/block-loader": "<?php /* @escapeNotVerified */ echo $block->getViewFileUrl('images/loader-1.gif'); ?>"
+            }
+        }
+    </script>
+    <script type="text/javascript">
+        require(["jquery"], function($){
+            $(window).ready( function(){
+                $(document).on("click", "#mini-cart .add-action", function(){
+                    var parent = jQuery(this).parents(".product-item");
+                    var itemId = parent.find('.item-qty').data('cart-item');
+                    var iQty = parseInt($('#cart-item-' + itemId + '-qty').val());
+                    var productId = $(this).data('product-id');
+                    if( $(this).hasClass('add-up') ) {
+                        if(iQty < <?php echo $ves->getConfig('item_options/max_sale_qty','cataloginventory') ?>){
+                            $('#cart-item-' + itemId + '-qty').val(parseInt(iQty+1)).trigger('change');
+                            jQuery('.product-cartnumber'+itemId).html(parseInt(iQty+1));
+                            parent.find('.cart-number').html(iQty+1).trigger('change');
+                            qty = iQty+1;
+                        }
+                    }else {
+                        if( iQty > 0 ) {
+                            $('#cart-item-' + itemId + '-qty').val(parseInt(iQty-1)).trigger('change');
+                            parent.find('.cart-number').html(iQty-1).trigger('change');
+                            qty = iQty-1;
+                        }
+                    }
+                    jQuery('.product-cartnumber'+productId).html(qty);
+                    jQuery('.product-cartnumber'+productId).val(qty);
+                    if(qty==0){
+                        jQuery('.vesproduct-cartnumber' + productId).hide();
+                    } else {
+                        jQuery('.vesproduct-cartnumber' + productId).show();
+                    }
+                    $('[data-block="minicart"]').trigger('contentLoading');
+                    parent.find(".update-cart-item").trigger("click");
+                    return false;
+                });
+                $(document).on("click", 'a.action.delete', function(){
+                    var currentId = $(this).data('product-id');
+                    alert(currentId);
+                    $(document).on('click', '.action-primary.action-accept', function(){
+                        jQuery('.product-cartnumber'+currentId).html(0);
+                        jQuery('.product-cartnumber'+currentId).val(0);
+                        jQuery('.vesproduct-cartnumber' + currentId).hide();
+                    });
+                });
+            })
+        });
+    </script>
+</div>

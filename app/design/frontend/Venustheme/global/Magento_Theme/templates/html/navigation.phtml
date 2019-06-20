@@ -1,0 +1,28 @@
+<div class="sections nav-sections">
+	<div class="section-items nav-sections-items" data-mage-init='{"tabs":{"openedState":"active"}}'>
+		<div class="section-item-title nav-sections-item-title hidden-lg hidden-md" data-role="collapsible" role="tablist" aria-controls="store.top.menu">
+			<a class="nav-sections-item-switch" href="#store.top.menu1"><?php echo __('Menu'); ?></a>
+		</div>
+		<div class="section-item-title nav-sections-item-title hidden-lg hidden-md" data-role="collapsible" role="tablist" aria-controls="store.account">
+			<a class="nav-sections-item-switch" href="#store.account"><?php echo __('Account'); ?></a>
+		</div>
+
+		<div class="section-item-title nav-sections-item-title hidden-lg hidden-md" data-role="collapsible" role="tablist" aria-controls="store.settings">
+			<a class="nav-sections-item-switch" href="#store.settings"><?php echo __('Settings'); ?></a>
+		</div>
+
+		<div class="section-item-content" id="store.top.menu1" data-role="content" role="tabpanel">
+			<?php echo $this->getChildHtml("menu-top3"); ?>
+			
+		</div> 
+
+		<div class="section-item-content hidden-lg hidden-md" id="store.account" data-role="content" role="tabpanel">
+			<?php echo $this->getChildHtml("store_links"); ?>
+		</div>
+
+		<div class="section-item-content hidden-lg hidden-md" id="store.settings" data-role="content" role="tabpanel">
+			<?php echo $this->getChildHtml("store_language_custom"); ?>
+			<?php echo $this->getChildHtml("store_currency"); ?>
+		</div>
+	</div>
+</div>

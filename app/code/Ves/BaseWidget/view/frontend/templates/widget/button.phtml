@@ -1,0 +1,41 @@
+<?php
+$helper         = $this->helper('Ves\BaseWidget\Helper\Data');
+$widget_heading = $this->getConfig('title');	
+$addition_cls   = $this->getConfig('addition_cls');
+$stylecls       =  $this->getConfig('stylecls');
+$button_title   = $this->getConfig('button_title');	
+$href           = $this->getConfig('href');
+$href = str_replace(" ", "+", $href);
+$href = base64_decode($href);
+
+if($href) {
+	$href = $this->getDataFilterHelper()->filter($href);
+}
+$icon           = $this->getConfig('icon');
+$size           = $this->getConfig('size');
+$color_button   =  $this->getConfig('color_button');	
+$el_class       = $this->getConfig('el_class');
+$color_button   = '';
+$content_html   = $this->getConfig('html');
+$content_html   = str_replace(" ", "+", $content_html);
+$content_html   = base64_decode($content_html);
+$content_html   = $this->getDataFilterHelper()->filter($content_html);
+?>
+<?php if ($href): ?>
+	<div class="ves-widget widget-button block <?php echo $addition_cls; ?> <?php if (isset($stylecls)&&$stylecls) echo 'block-'.$stylecls;?>">
+		<?php if (isset($widget_heading)&&!empty($widget_heading)): ?>
+			<div class="block-title">
+				<?php echo $widget_heading; ?>
+			</div>
+		<?php endif; ?>
+		<div class="widget-inner block-content">
+			<?php if ($button_title) { ?>
+			<a href="<?php echo $href; ?>" class="btn <?php echo $color_button." ".$el_class." ".$size;?>" title="<?php echo $button_title;?>">
+				<i class="<?php echo $icon; ?>"></i>
+				<?php echo $button_title; ?>
+			</a>
+			<?php } ?>
+			<?php echo $content_html; ?>
+		</div>
+	</div>
+<?php endif; ?>

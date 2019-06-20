@@ -1,0 +1,132 @@
+<?php
+$ves = $this->helper('Ves\Themesettings\Helper\Theme');
+$sticky = $ves->getHeaderCfg("sticky_settings/sticky");
+$sticky_type = $ves->getHeaderCfg("sticky_settings/sticky_type");
+$logo = $ves->getHeaderCfg("sticky_settings/logo");
+$menu = $ves->getHeaderCfg("sticky_settings/menu");
+$search = $ves->getHeaderCfg("sticky_settings/search");
+$topcart = $ves->getHeaderCfg("sticky_settings/topcart");
+$topbar = $ves->getHeaderCfg("sticky_settings/topbar");
+$enable_toplinks = $ves->getHeaderCfg("toplinks_settings/enable");
+$show_search = $ves->getHeaderCfg("search_settings/search");
+$show_topbar = $ves->getHeaderCfg("topbar/show_topbar");
+if($sticky_type == 'all'){
+	$logo = $menu = $search = $topcart = $toplinks = $topbar= true;	
+}
+?>
+<div id="ves-header" class="ves-header2">
+	<!-- Top bar -->
+	<?php if($show_topbar): ?>
+	<div class="panel wrapper page-topbar clearfix <?php echo $topbar?"sticky-item":"sticky-item-hidden"?>">
+		<div class="ves-inner page-main">
+			<div class="row">
+				<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+					<?php if($enable_toplinks){ ?>
+						<div class="header-links-wrapper">
+							<?php echo $this->getChildHtml('top_links') ?>
+						</div>
+					<?php } ?>
+				</div>
+				<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-right">
+					<?php echo $this->getChildHtml('setting_links') ?>
+				</div>
+			</div>
+		</div>
+	</div>
+	<?php endif; ?>
+	<!-- header content -->
+	<div class="ves-inner page-main">
+		<div class="header-content clearfix">
+			<div class="row">
+				<div class="col-lg-3 col-md-3 col-sm-4 col-xs-7 text-left">
+					<div class="logo-wrapper <?php echo $logo?"sticky-item":"sticky-item-hidden" ?> pull-left">
+						<?php echo $this->getChildHtml('logo') ?>
+					</div>
+				</div>
+				<div class="col-lg-7 col-md-7 col-sm-5 col-xs-3 text-left">
+					<?php if($show_search): ?>
+					<div class="search-wrapper <?php echo $search?"sticky-item":"sticky-item-hidden" ?>"><?php echo $this->getChildHtml('ves.autosearch') ?>
+					</div>
+					<?php endif;?>
+				</div>
+				<div class="col-lg-2 col-md-2 col-sm-3 col-xs-2 text-left">
+					<div class="minicart-warp <?php echo $topcart?"sticky-item":"sticky-item-hidden" ?> pull-right"><?php echo $this->getChildHtml('minicart') ?>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Menu top -->
+	<div class="ves-menutop clearfix <?php echo $menu?"sticky-item":"sticky-item-hidden" ?>"> 
+		<div class="ves-inner page-main">
+			<div class="row">
+				<div class="col-lg-3 col-md-3 col-sm-4 col-xs-4">
+					<div class="dropdown ves-menu hidden-xs hidden-sm">
+			            <div class="dropdown-toggle" data-toggle="dropdown">
+			                <i class="fa fa-bars"></i> <?php echo __('Shop Categories'); ?>
+			            </div>
+			            <div class="dropdown-menu" role="menu">
+			                <?php echo $block->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('vertical-menu')->toHtml();?>
+			            </div> 
+			        </div>
+				</div>
+				<div class="col-lg-9 col-md-9 col-sm-8 col-xs-8">
+					<?php echo $this->getChildHtml("navigation.sections2"); ?>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<?php if($sticky){ ?>
+	<script type="text/javascript">
+		require([
+			'jquery',
+			'Ves_Themesettings/js/theme'
+			], function(){
+				
+				function getScroll () {
+				    var b = document.body;
+				    var e = document.documentElement;
+				    return {
+				        left: parseFloat( window.pageXOffset || b.scrollLeft || e.scrollLeft ),
+				        top: parseFloat( window.pageYOffset || b.scrollTop || e.scrollTop )
+				    };
+				}
+				jQuery(document).ready(function($) {
+					var h = jQuery('.page-header').height();
+					var myHeader = jQuery('.page-header');
+					var hasBreadcrumbs = false;
+					var breadcrumbs = jQuery(".breadcrumbs");
+					if(typeof(breadcrumbs) != "undefined" && breadcrumbs.length > 0) {
+						hasBreadcrumbs = true;
+					}
+					myHeader.data( 'position', myHeader.position() );
+
+					jQuery(window).scroll(function(){
+						var hPos = myHeader.data('position'), scroll = getScroll();
+						var h_px = jQuery("#ves-header", ".page-header").outerHeight(true)+"px";
+
+						if ( hPos.top < scroll.top) {
+							jQuery('.page-header').addClass("navbar-fixed-top keep-header");
+							var headerHeight = jQuery('.page-header').height();
+							<?php if($sticky_type == 'specify'){ ?>jQuery(".page-wrapper").css({"padding-top":headerHeight+"px"});<?php } ?>
+							jQuery(".sticky-item-hidden").css({"display":"none"});
+							if(!hasBreadcrumbs) {
+								jQuery("#maincontent").delay(1000).css("margin-top", h_px);
+							}
+						}else{
+							jQuery(".sticky-item-hidden").css({"display":""});
+							jQuery('.page-header').removeClass("navbar-fixed-top keep-header");
+							jQuery(".page-wrapper").css({"padding-top":""});
+							if(!hasBreadcrumbs) {
+								jQuery("#maincontent").delay(1000).css({"margin-top": ""});
+							}
+						}
+					});
+				});
+			});
+	</script>
+	<?php } ?>
+	<?php echo $this->getChildHtml('ves_navigation'); ?>
+</div>

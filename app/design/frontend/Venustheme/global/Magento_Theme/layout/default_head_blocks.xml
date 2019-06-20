@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2015 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no"/> 
+        <!-- Add local resources -->
+
+        <!-- active for product mode 
+        <css src="bootstrap/css/bootstrap.css" />
+        <css src="bootstrap/css/bootstrap-theme.min.css" />
+         -->
+         
+        <!-- active for development mode -->
+        <css src="css/bootstrap/bootstrap.css" />
+        <css src="css/bootstrap/theme.css" />
+        <!-- end active for development mode -->
+
+        <css src="owl.carousel/assets/owl.carousel.css" />
+        <css src="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css"/>
+        <css src="//cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css" />
+        <css src="//fonts.googleapis.com/css?family=Poppins:300,400,500,600,700"/>
+        <css src="css/custom.css" />
+
+       <!--  <script src="jquery.js" />
+        <script src="bootstrap/js/bootstrap.min.js" />
+        <script src="owl.carousel/owl.carousel.min.js" /> -->
+        <css src="css/flag-icon.css"/>
+    </head>
+</page>
